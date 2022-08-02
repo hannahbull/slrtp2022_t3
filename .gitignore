@@ -38,7 +38,7 @@ TAGS
 
 
 from_katrin*
-data*
+data/*
 checkpoints/*
 bslcp_challenge_data/*
 bslcp_challenge_labels/*
