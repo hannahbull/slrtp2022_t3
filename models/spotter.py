@@ -45,7 +45,10 @@ class Spotter(nn.Module):
                 
         target_class = data_dict['txt_idx'].type(torch.LongTensor).cuda()
 
-        lin_layer = self.fc(feat_inp)
+        if not self.opts.logits_only:
+            lin_layer = self.fc(feat_inp)
+        else: 
+            lin_layer = feat_inp
 
         loss = self.loss(lin_layer, target_class)
 

@@ -3,8 +3,8 @@ python main.py \
 --n_workers 32 \
 --batch_size 64 \
 --n_epochs 5 \
---train_data_loc 'bslcp_challenge_data/train' \
+--train_data_loc 'bslcp_challenge_data_bobsl/train' \
 --train_labels_loc 'bslcp_challenge_labels/train' \
---val_data_loc 'bslcp_challenge_data/train' \
---val_labels_loc 'bslcp_challenge_labels/train' \
+--val_data_loc 'bslcp_challenge_data_bobsl/dev' \
+--val_labels_loc 'bslcp_challenge_labels/dev' \
 --vocab_file_loc 'bslcp_vocab_981.json' \

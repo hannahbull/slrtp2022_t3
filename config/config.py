@@ -32,6 +32,9 @@ def load_opts():
     parser.add_argument('--save_path', type=str, default='checkpoints', help='Checkpoints directory to save model')
     parser.add_argument('--n_epochs', type=int, default=10, help='Number of epochs')
 
+
+    parser.add_argument('--logits_only', action='store_true', help='Use logits only to obtain pseudolabels (use bslcp_challeng_logits as data)')
+
     parser.add_argument('--vocab_file_loc', type=str, default='bslcp_vocab_981.json', help='List of queries to use at evaluation')
 
     parser.add_argument('--queries_eval_file', type=str, default='data/dev.json', help='List of queries to use at evaluation')
