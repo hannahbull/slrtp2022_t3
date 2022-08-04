@@ -32,6 +32,18 @@ def load_opts():
     parser.add_argument('--save_path', type=str, default='checkpoints', help='Checkpoints directory to save model')
     parser.add_argument('--n_epochs', type=int, default=10, help='Number of epochs')
 
+    parser.add_argument('--vocab_file_loc', type=str, default='bslcp_vocab_981.json', help='List of queries to use at evaluation')
+
+    parser.add_argument('--queries_eval_file', type=str, default='data/dev.json', help='List of queries to use at evaluation')
+
+    parser.add_argument('--train_data_loc', type=str, default='bslcp_challenge_data/train', help='Location of training data')
+    parser.add_argument('--train_labels_loc', type=str, default='bslcp_challenge_data/train', help='Location of training labels')
+    parser.add_argument('--val_data_loc', type=str, default='bslcp_challenge_data/val', help='Location of val data')
+    parser.add_argument('--val_labels_loc', type=str, default='bslcp_challenge_data/val', help='Location of val labels')
+    parser.add_argument('--test_data_loc', type=str, default='bslcp_challenge_data/test', help='Location of test data')
+
+    parser.add_argument('--test_output_loc', type=str, default='res/submission_dev.csv', help='Location of test submission output')
+
     parser.add_argument('--model', type=str, default='spotter', help='Model type')
     parser.add_argument('--dataset', type=str, default='spotting', help='Dataset type')
     parser.add_argument('--trainer', type=str, default='trainer', help='Trainer type')

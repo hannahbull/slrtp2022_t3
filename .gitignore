@@ -36,8 +36,6 @@ TAGS
 .project
 .metadata
 
-
-from_katrin*
 data/*
 checkpoints/*
 bslcp_challenge_data/*
@@ -48,3 +46,6 @@ evaluation*
 .ipynb_checkpoints*
 .vscode*
 .vector_cache*
+
+res/spotting_test*
+submission.csv

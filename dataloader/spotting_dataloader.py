@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
 
 from scipy import io
+import json 
 
 import torch
 
@@ -15,7 +16,7 @@ class SpottingDataset(Dataset):
         self.mode = mode
         self.opts = opts
 
-        self.bslcp_info = pickle.load(open('info.pkl', 'rb'))
+        self.vocab_file = json.load(open(self.opts.vocab_file_loc, 'r'))
 
         ### Build data dictionary by iterating through vtt files and captions
         self.data_dict = {}
@@ -27,14 +28,13 @@ class SpottingDataset(Dataset):
 
         ### Load list of train/val/test split videos
         if (self.mode == 'train'): 
-            data_path_root = 'bslcp_challenge_data/train'
-            labels_path_root = 'bslcp_challenge_labels/train'
+            data_path_root = self.opts.train_data_loc
+            labels_path_root = self.opts.train_labels_loc
         elif (self.mode == 'val'): 
-            data_path_root = 'bslcp_challenge_data/test'
-            labels_path_root = 'bslcp_challenge_labels/test'
+            data_path_root = self.opts.val_data_loc
+            labels_path_root = self.opts.val_labels_loc
         elif (self.mode == 'test'):
-            data_path_root = 'bslcp_challenge_data/test'
-            labels_path_root = 'bslcp_challenge_labels/test'
+            data_path_root = self.opts.test_data_loc
         else: 
             print('Choose mode = "train" or "val" or "test"')
         
@@ -51,17 +51,19 @@ class SpottingDataset(Dataset):
             pad_start = np.tile(load_feats[0,:], 8).reshape(8,-1)
             pad_end = np.tile(load_feats[-1,:], 7).reshape(7,-1)
             load_feats = np.concatenate((pad_start, load_feats, pad_end))
-            if self.model != 'test':
+            if self.mode != 'test':
                 load_labels = np.load(os.path.join(labels_path_root, dp))
             else: 
                 load_labels = np.ones(len(load_feats))*980
             
             for ix, lab in enumerate(load_labels): 
-                if lab < len(self.bslcp_info['words']) and lab >=0:
-                    self.data_dict["txt"].append(self.bslcp_info['words'][lab])
+                if lab < len(self.vocab_file) and lab >=0:
+                    self.data_dict["txt"].append(self.vocab_file[str(int(lab))])
                     self.data_dict["txt_idx"].append(lab)
                 else: 
-                    self.data_dict["txt"].append("OOV")
+                    print('Warning, OOV word?')
+                    # import pdb; pdb.set_trace()
+                    self.data_dict["txt"].append("SILENCE")
                     self.data_dict["txt_idx"].append(980)
                 self.data_dict["feats"].append(load_feats[ix,:])
                 self.data_dict["feats_idx"].append(ix)

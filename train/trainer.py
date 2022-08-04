@@ -10,6 +10,7 @@ from torch import nn
 from tqdm import tqdm
 from utils import colorize
 import pandas as pd
+import json
 
 import pickle 
 
@@ -39,9 +40,10 @@ class Trainer(BaseTrainer):
         self.data_tic = self.step_tic = None
                 
         if mode == 'test': 
-            test_queries = pd.read_csv('test_set_queries.csv')
+            test_queries = json.load(open(self.opts.queries_eval_file, 'r'))
+            test_query_vid_list = list(set([test_queries[k]['video'] for k in test_queries.keys()]))
             dict_test_out = {}
-            for vid in set(test_queries.videos.tolist()):
+            for vid in test_query_vid_list:
                 dict_test_out[vid] = {'feats_idx': [], 'topk': []}
         
         for b_id, batch_sample in enumerate(dataloader): 
@@ -110,12 +112,12 @@ class Trainer(BaseTrainer):
         bar.close()
 
         if mode=='test':
-            print('Evaluating test set queries...')
+            print('Evaluating queries...')
             detected = []
             start_end_idx = []
-            for qr in tqdm(range(len(test_queries))): 
-                vid = test_queries.loc[qr].videos
-                word = test_queries.loc[qr].queries
+            for k in tqdm(test_queries.keys()): 
+                vid = test_queries[k]['video']
+                word = test_queries[k]['query']
                 topk_pred = np.array([dict_test_out[vid]['topk'][j] for j in dict_test_out[vid]['feats_idx']])
                 if word in topk_pred: 
                     detected.append(1)
@@ -138,9 +140,13 @@ class Trainer(BaseTrainer):
             ends = [s[1] for s in start_end_idx]
 
             dict_out = pd.DataFrame({'detections': detected, 'start': starts, 'end': ends})
-            dict_out.to_csv(os.path.join('submission.csv'), header=False)
-            print('Saved ', os.path.join('submission.csv'))
-    
+            dict_out.to_csv(os.path.join(self.opts.test_output_loc), header=False)
+            cmd = f"cp {self.opts.test_output_loc} submission.csv; zip {self.opts.test_output_loc.replace('.csv', '.zip')} submission.csv"
+            os.system(cmd)
+            print('Saved ', self.opts.test_output_loc)
+            print('Saved ', self.opts.test_output_loc.replace('.csv', '.zip'))
+            os.system('rm submission.csv')
+
         desc = "Epoch end: %s: " % mode
         for cuml_name, cuml in sorted(metrics_dict.items()):
             desc += "%s %.2f " % (cuml_name, cuml / counter)
