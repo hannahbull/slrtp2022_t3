@@ -1,19 +1,19 @@
 # Baseline for SLRTP Track 3: Spotting on BSL Corpus
 
-This repository is intended to produce a baseline method for spotting on BSL Corpus. Given a feature vector corresponding to a window of video frames, we use a simple MLP model to predict the sign gloss. 
+This repository is intended to produce a baseline method for spotting on BSL Corpus. Using the provided logits in the data for this challenge, the model computes the top-5 predictions at each frame. Given a query gloss, we consider a sign gloss for this query to be localised if amongst the top-5 predictions.  
 
-## To train the model:
+The structure of this repository also contains a dataloader to load model features and labels, and a simple MLP model that can be trained on the features. 
 
-```bash train.sh``` 
-
-## To evaluate the model on the test set: 
+## To evaluate baseline model using the provided logits on test set: 
 
 ```bash test.sh```
 
-This create a file called `submission.csv`, which may be uploaded to the CodaLab server. 
+This create a file called `res/submission_dev.zip`, which may be uploaded to the CodaLab server. 
 
-## Download data
+## To train a simple MLP model 
 
-## Download checkpoints
+```bash train.sh``` 
+
+
 
 

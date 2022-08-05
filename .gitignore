@@ -41,6 +41,7 @@ checkpoints/*
 bslcp_challenge_data/*
 bslcp_challenge_labels/*
 bslcp_challenge*
+track3_data/*
 
 evaluation*
 

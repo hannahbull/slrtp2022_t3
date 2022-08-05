@@ -39,11 +39,11 @@ def load_opts():
 
     parser.add_argument('--queries_eval_file', type=str, default='data/dev.json', help='List of queries to use at evaluation')
 
-    parser.add_argument('--train_data_loc', type=str, default='bslcp_challenge_data/train', help='Location of training data')
-    parser.add_argument('--train_labels_loc', type=str, default='bslcp_challenge_data/train', help='Location of training labels')
-    parser.add_argument('--val_data_loc', type=str, default='bslcp_challenge_data/val', help='Location of val data')
-    parser.add_argument('--val_labels_loc', type=str, default='bslcp_challenge_data/val', help='Location of val labels')
-    parser.add_argument('--test_data_loc', type=str, default='bslcp_challenge_data/test', help='Location of test data')
+    parser.add_argument('--train_data_loc', type=str, default='track3_data/bslcp_challenge_data/train', help='Location of training data')
+    parser.add_argument('--train_labels_loc', type=str, default='track3_data/bslcp_challenge_data/train', help='Location of training labels')
+    parser.add_argument('--val_data_loc', type=str, default='track3_data/bslcp_challenge_data/val', help='Location of val data')
+    parser.add_argument('--val_labels_loc', type=str, default='track3_data/bslcp_challenge_data/val', help='Location of val labels')
+    parser.add_argument('--test_data_loc', type=str, default='track3_data/bslcp_challenge_data/test', help='Location of test data')
 
     parser.add_argument('--test_output_loc', type=str, default='res/submission_dev.csv', help='Location of test submission output')
 
