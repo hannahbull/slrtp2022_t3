@@ -6,13 +6,13 @@ The structure of this repository also contains a dataloader to load model featur
 
 ## To evaluate baseline model using the provided logits on test set: 
 
-```bash test.sh```
+```bash commands/test.sh```
 
 This create a file called `res/submission_dev.zip`, which may be uploaded to the CodaLab server. 
 
 ## To train a simple MLP model 
 
-```bash train.sh``` 
+```bash commands/train.sh``` 
 
 
 
